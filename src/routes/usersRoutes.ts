@@ -1,11 +1,12 @@
 import express from "express";
 import usersControllers from "../components/controllers/usersController";
+import authMiddleware from "../middleware/authMiddleWare";
 import usersMiddlewares from "../middleware/usersMiddlewares";
 
 const usersRoutes = express.Router();
 
 usersRoutes
-    .get("/", authMiddleware.isAdmin, usersControllers.getAllUsers)
+    .get("/", usersControllers.getAllUsers)
     .get("/:id", usersControllers.getUserById)
     .post("/", usersMiddlewares.checkCreateUserData, usersControllers.createNewUser)
     .patch("/:id", usersControllers.updateUser)

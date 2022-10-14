@@ -10,7 +10,18 @@ const users: IUser[] = [
         email: 'juhan@juurikas.ee',
         password: 'juhan',
         personalNumber: 543654354,
-        phone: "54635454"
+        phone: "54635454",
+        role: "Admin"
+    },
+    {
+        id: 2,
+        firstName: 'Rita',
+        lastName: 'Rebane',
+        email: 'rita@rebane.ee',
+        password: 'rita',
+        personalNumber: 47102124354,
+        phone: "5015454",
+        role: "User"
     },
 ];
 
