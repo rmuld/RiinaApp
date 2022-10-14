@@ -1,44 +1,26 @@
 import express, { Request, Response, Express } from "express";
-import usersController from './api/controllers/usersController';
-import addressesController from './api/controllers/addressesController';
-import waterMetersController from './api/controllers/waterMetersController';
+import logger from './middleware/generalMiddlewares';
+import usersController from './components/controllers/usersController';
+import addressesController from './components/controllers/addressesController';
+import waterMetersController from './components/controllers/waterMetersController';
+import generalRoutes from "./routes/generalRoutes";
+import usersRoutes from "./routes/usersRoutes";
+import addressesRoutes from "./routes/addressesRoutes";
+import waterMetersRoutes from "./routes/waterMeterRoutes";
 
 const app: Express = express();
 const PORT: number = 3000;
+const apiPath = '/api/v1';
 
 app.use(express.json());
+app.use(logger);
 
-
-
-app.get("/api/v1/health", (req: Request, res: Response) => {
-    res.status(200).json({
-        success: true,
-        message: "Hello Riina App!"
-    });
-});
-
-// API endpoints
-// USERS API
-app.get("/api/v1/users", usersController.getAllUsers);
-app.get("api/v1/users/:id", usersController.getUserById);
-app.post("api/v1/users", usersController.createNewUser);
-app.put("api/v1/users/:id", usersController.updateUser);
-app.delete("/api/v1/addresses/:id", usersController.deleteUserById);
-
-// ADDRESSES API
-app.get("api/v1/addresses", addressesController.getAllAddresses);
-app.get("api/v1/addresses/:id", addressesController.getAddressById);
-app.post("api/v1/addresses", addressesController.createNewAddress);
-app.put("api/v1/addresses/:id", addressesController.updateAddress);
-app.delete("api/v1/addresses/:id", addressesController.deleteAddressById)
-
-//WATERMETERS API
-app.get("api/v1/water-meters", waterMetersController.getAllWaterMeters);
-app.get("api/v1/water-meters/:id", waterMetersController.getWaterMeterById);
-app.post("api/v1/water-meters", waterMetersController.createNewWaterMeter);
-app.put("api/v1/water-meters/:id", waterMetersController.updateWaterMeter);
-app.delete("api/v1/water-meters/:id", waterMetersController.deleteWaterMeterById);
-
+//app.post(`${apiPath}/login`, authControllers.login);
+app.use(`${apiPath}/health`, generalRoutes);
+//app.use(authMiddleware.isLoggedIn);
+app.use(`${apiPath}/users`, usersRoutes);
+app.use(`${apiPath}/addresses`, addressesRoutes);
+app.use(`${apiPath}/water-meter`, waterMetersRoutes);
 
 app.listen(PORT, () => {
     // eslint-disable-next-line no-console

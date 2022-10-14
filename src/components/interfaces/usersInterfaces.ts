@@ -5,6 +5,7 @@ interface INewUser {
     password: string;
     personalNumber: number;
     phone: string;
+    role: string;
 }
 
 interface IUser extends INewUser {
@@ -18,6 +19,7 @@ interface IUserWithoutPassword {
     email: string;
     personalNumber: number;
     phone: string;
+    role: string;
 }
 
 export { INewUser, IUser, IUserWithoutPassword };

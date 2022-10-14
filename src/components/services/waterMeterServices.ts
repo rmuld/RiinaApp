@@ -31,6 +31,7 @@ const findWaterMeterByAddressId = (id: number): IWaterMeter[] => {
 
 const addressServices = {
     findWaterMeterById,
+    findWaterMeterByAddressId,
     createWaterMeterService
 }
 

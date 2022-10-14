@@ -1,5 +1,5 @@
 import express from 'express';
-import addressesControllers from '../api/controllers/addressesController';
+import addressesControllers from '../components/controllers/addressesController';
 import addressesMiddlewares from '../middleware/addressesMiddlewares';
 
 const addressesRoutes = express.Router();

@@ -1,5 +1,5 @@
 import express from 'express';
-import waterMeterControllers from '../api/controllers/waterMetersController';
+import waterMeterControllers from '../components/controllers/waterMetersController';
 import waterMetersMiddleware from '../middleware/waterMetersMiddlewares';
 
 const waterMetersRoutes = express.Router();

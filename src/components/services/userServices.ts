@@ -1,8 +1,9 @@
 import { INewUser, IUser, IUserWithoutPassword } from "../interfaces/usersInterfaces";
 import { users } from '../mockData/mockData';
+import hashService from "./hashService";
 
 
-const findUserById = (id: number): IUser | undefined => {
+const getUserById = (id: number): IUser | undefined => {
     let user: IUser | undefined = users.find(element => element.id === id);
     return user;
 };
@@ -15,7 +16,8 @@ const getUserWithoutPassword = (user: IUser): IUserWithoutPassword => {
         lastName: user.lastName,
         email: user.email,
         personalNumber: user.personalNumber,
-        phone: user.phone
+        phone: user.phone,
+        role: user.role
     };
 };
 
@@ -27,38 +29,38 @@ const unknownUser = (): IUser => {
             email: 'jane@doe.com',
             password: 'jane',
             personalNumber: 4568008009,
-            phone: "55676869"
+            phone: "55676869",
+            role: "User"
         };
 };
 
-const getAllUsersService = () => {
+const getAllUsers = () => {
     const usersWithoutPassword = users.map(user => {
         const userWithoutPassword = userServices.getUserWithoutPassword(user);
         return userWithoutPassword;
     });
 }
     
-const createUserService = (user: INewUser):number => {
+const createUser = async (newUser: INewUser): Promise<number> => {
     const id = users.length + 1;
-    const newUser: IUser = {
-        id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-        personalNumber: user.personalNumber,
-        phone: user.phone
-    };
-    users.push(newUser);
+    const hashedPassword = await hashService.hash(newUser.password)
+    
+    users.push({id, ...newUser, password: hashedPassword});
     return id;
 }
 
+const getUserByEmail = async(email: string): Promise<IUser | undefined> => {
+    const user = users.find(e => e.email === email);
+    return user;
+}
+
 const userServices = {
-    findUserById, 
+    getUserById,
+    getUserByEmail, 
     getUserWithoutPassword,
     unknownUser,
-    getAllUsersService,
-    createUserService
+    getAllUsers,
+    createUser
 }
 
 export default userServices;

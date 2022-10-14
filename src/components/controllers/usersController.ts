@@ -5,7 +5,7 @@ import userServices from '../services/userServices';
 
 
  const getAllUsers = (req: Request, res: Response) => {
-    const usersWithoutPassword = userServices.getAllUsersService();
+    const usersWithoutPassword = userServices.getAllUsers();
     res.status(200).json({
         success: true,
         message: 'List of users',
@@ -15,7 +15,7 @@ import userServices from '../services/userServices';
 
 const getUserById = (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
-    let user: IUser | undefined = userServices.findUserById(id);
+    let user: IUser | undefined = userServices.getUserById(id);
     if (!user) {
         return res.status(404).json({
             success: false,
@@ -36,7 +36,7 @@ const getUserById = (req: Request, res: Response) => {
 const updateUser = (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const { firstName, lastName, email, password, personalNumber, phone } = req.body;
-    const user: IUser | undefined = userServices.findUserById(id);
+    const user: IUser | undefined = userServices.getUserById(id);
     if (!user) {
         return res.status(404).json({
             success: false,
@@ -63,7 +63,7 @@ const updateUser = (req: Request, res: Response) => {
     });
 };
 
-const createNewUser = (req: Request, res: Response) => {
+const createNewUser = async (req: Request, res: Response) => {
     const { firstName, lastName, email, password, personalNumber, phone } = req.body;
     const newUser = {
         firstName,
@@ -71,9 +71,10 @@ const createNewUser = (req: Request, res: Response) => {
         email,
         password,
         personalNumber,
-        phone
+        phone,
+        role: "User"
     }
-    const id = userServices.createUserService(newUser);
+    const id = await userServices.createUser(newUser);
 
     return res.status(201).json({
         success: true,

@@ -59,13 +59,14 @@ const updateWaterMeter = (req: Request, res: Response) => {
 };
 
 const createNewWaterMeter = (req: Request, res: Response) => {
-    const {  serialNumber, checkingDate, sealNumber, type } = req.body;
+    const {  serialNumber, checkingDate, sealNumber, type, addressId } = req.body;
     
     const newWaterMeter = {
         serialNumber,
         checkingDate,
         sealNumber,
         type,
+        addressId
     }
     const id = waterMeterServices.createWaterMeterService(newWaterMeter);
 

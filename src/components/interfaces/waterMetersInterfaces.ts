@@ -10,4 +10,5 @@ interface IWaterMeter extends INewWaterMeter {
     id: number;
 }
 
-export { IWaterMeter, INewWaterMeter};
+
+export { IWaterMeter, INewWaterMeter };
